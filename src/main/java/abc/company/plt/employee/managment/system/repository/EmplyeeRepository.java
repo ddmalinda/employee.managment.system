@@ -1,0 +1,7 @@
+package abc.company.plt.employee.managment.system.repository;
+
+import abc.company.plt.employee.managment.system.model.Emplyee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmplyeeRepository  extends JpaRepository<Emplyee, Long> {
+}
