@@ -41,4 +41,7 @@ public class EmplyeeService {
 
      return emplyeeRepository.save(emplyee);
  }
+ public List<Emplyee> getEmplyeeListByDepartmentId(Long departmentId){
+    return emplyeeRepository.findbyDepartmentId(departmentId);
+ }
 }
