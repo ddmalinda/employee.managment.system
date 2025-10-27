@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Entity
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "emplyee")
@@ -32,7 +31,7 @@ public class Emplyee {
 
     //Many Emplyees can belong to one Business
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deparmentID")
+    @JoinColumn(name = "deparment_Id")
     @JsonBackReference
     private Deparment deparment;
 }
