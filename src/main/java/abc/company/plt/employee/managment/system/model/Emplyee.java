@@ -8,8 +8,7 @@ import lombok.*;
 
 
 @Entity
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "emplyee")
@@ -29,7 +28,7 @@ public class Emplyee {
     private String firstName;
     private String lastName;
 
-    //Many Emplyees can belong to one Business
+    //Many Emplyees can belong to one Deparment
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deparment_Id")
     @JsonBackReference

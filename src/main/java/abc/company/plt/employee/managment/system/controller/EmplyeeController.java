@@ -45,8 +45,8 @@ public class EmplyeeController {
         try {
             Emplyee updatedEmplyee = emplyeeService.updateEmplyee(id, emplyeeDetails);
             return ResponseEntity.ok(updatedEmplyee);
-        } catch (RuntimeException ex) { // Catches the "Not Found" exception from the service
-            return ResponseEntity.notFound().build(); // Return 404 if employee doesn't exist
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build(); // Return 404
         }
     }
 
@@ -58,7 +58,7 @@ public class EmplyeeController {
             emplyeeService.deleteEmpyeeById(id);
             return ResponseEntity.noContent().build(); // Return 204 No Content on success
         } else {
-            return ResponseEntity.notFound().build(); // Return 404 if employee doesn't exist
+            return ResponseEntity.notFound().build(); // Return 404
         }
     }
 

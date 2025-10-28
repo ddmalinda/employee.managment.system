@@ -1,14 +1,14 @@
 package abc.company.plt.employee.managment.system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deparment {
@@ -18,4 +18,9 @@ public class Deparment {
 
     @Column(unique=true,nullable= false)
     private String departmentName;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deparment_id")
+    @JsonManagedReference
+    private List<Emplyee> emplyee;
 }
