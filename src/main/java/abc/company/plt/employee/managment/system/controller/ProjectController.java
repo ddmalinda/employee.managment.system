@@ -39,9 +39,13 @@ public class ProjectController {
     }
     //update project
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Long projectId,@RequestBody Project proejctDetails){
-        Project project =projectService.updateProject(projectId,proejctDetails);
-        return ResponseEntity.ok(project);
+    public ResponseEntity<Project> updateProject(@PathVariable("id") Long projectId,@RequestBody Project proejctDetails){
+        try {
+            Project project = projectService.updateProject(projectId, proejctDetails);
+            return ResponseEntity.ok(project);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //detele project
@@ -59,21 +63,33 @@ public class ProjectController {
     // Assign employee to project
     @PutMapping("/{projectId}/employees/{employeeId}")
     public ResponseEntity<Project> assignEmployeeToProject(@PathVariable Long projectId, @PathVariable Long employeeId) {
-        Project updatedProject = projectService.assignEmployeeToProject(projectId, employeeId);
-        return ResponseEntity.ok(updatedProject);
+        try {
+            Project updatedProject = projectService.assignEmployeeToProject(projectId, employeeId);
+            return ResponseEntity.ok(updatedProject);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Remove employee from project
     @DeleteMapping("/{projectId}/employees/{employeeId}")
     public ResponseEntity<Project> removeEmployeeFromProject(@PathVariable Long projectId, @PathVariable Long employeeId) {
-        Project updatedProject = projectService.removeEmployeeFromProject(projectId, employeeId);
-        return ResponseEntity.ok(updatedProject);
+        try {
+            Project updatedProject = projectService.removeEmployeeFromProject(projectId, employeeId);
+            return ResponseEntity.ok(updatedProject);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Get all employees in a project
     @GetMapping("/{projectId}/employees")
     public ResponseEntity<Set<Emplyee>> getProjectEmployees(@PathVariable Long projectId) {
-        Set<Emplyee> employees = projectService.getProjectEmployees(projectId);
-        return ResponseEntity.ok(employees);
+        try {
+            Set<Emplyee> employees = projectService.getProjectEmployees(projectId);
+            return ResponseEntity.ok(employees);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
