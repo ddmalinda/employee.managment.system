@@ -1,16 +1,22 @@
 package abc.company.plt.employee.managment.system.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"deparment", "projects"})
 @Table(name = "emplyee")
 public class Emplyee {
     @Id
@@ -31,6 +37,13 @@ public class Emplyee {
     //Many Emplyees can belong to one Deparment
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deparment_Id")
-    @JsonBackReference
+    @JsonIgnore
     private Deparment deparment;
+
+    // Many-to-Many: Employee can work on many Projects
+    @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Project> projects = new HashSet<>();
+
+
 }

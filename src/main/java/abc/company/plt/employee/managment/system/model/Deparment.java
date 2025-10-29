@@ -1,11 +1,11 @@
 package abc.company.plt.employee.managment.system.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,8 +19,13 @@ public class Deparment {
     @Column(unique=true,nullable= false)
     private String departmentName;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deparment_id")
-    @JsonManagedReference
-    private List<Emplyee> emplyee;
+    // One Department can have many Employees
+    @OneToMany(mappedBy = "deparment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("department-employees")
+    private Set<Emplyee> employees = new HashSet<>();
+
+    // One Department can have many Projects
+    @OneToMany(mappedBy = "deparment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("department-projects")
+    private Set<Project> projects = new HashSet<>();
 }
