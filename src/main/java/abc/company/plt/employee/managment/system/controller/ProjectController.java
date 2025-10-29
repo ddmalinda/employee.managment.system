@@ -37,6 +37,24 @@ public class ProjectController {
         Project project = projectService.addProject(projectDetails);
         return new ResponseEntity<>(project, HttpStatus.CREATED);
     }
+    //update project
+    @PutMapping("/{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable Long projectId,@RequestBody Project proejctDetails){
+        Project project =projectService.updateProject(projectId,proejctDetails);
+        return ResponseEntity.ok(project);
+    }
+
+    //detele project
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id){
+        // Basic check if employee exists before deleting
+        if(projectService.getProjectID(id).isPresent()){
+            projectService.deleteProject(id);
+            return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        } else {
+            return ResponseEntity.notFound().build(); // Return 404
+        }
+    }
 
     // Assign employee to project
     @PutMapping("/{projectId}/employees/{employeeId}")

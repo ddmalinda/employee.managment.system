@@ -35,6 +35,20 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+    //Update project
+    public Project updateProject(Long projectId,Project projectDetails){
+            Project project =projectRepository.findById(projectId)
+                    .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
+            //update project
+            project.setProjectName(projectDetails.getProjectName());
+            return projectRepository.save(project);
+    }
+
+    //delete project
+    public void deleteProject(Long projectid){
+        projectRepository.deleteById(projectid);
+    }
+
     // Assign an employee to a project
     @Transactional
     public Project assignEmployeeToProject(Long projectId, Long employeeId) {
