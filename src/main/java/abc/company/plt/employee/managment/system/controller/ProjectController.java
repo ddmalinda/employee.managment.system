@@ -1,6 +1,6 @@
 package abc.company.plt.employee.managment.system.controller;
 
-import abc.company.plt.employee.managment.system.model.Emplyee;
+import abc.company.plt.employee.managment.system.model.Employee;
 import abc.company.plt.employee.managment.system.model.Project;
 import abc.company.plt.employee.managment.system.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,9 +84,9 @@ public class ProjectController {
 
     // Get all employees in a project
     @GetMapping("/{projectId}/employees")
-    public ResponseEntity<Set<Emplyee>> getProjectEmployees(@PathVariable Long projectId) {
+    public ResponseEntity<Set<Employee>> getProjectEmployees(@PathVariable Long projectId) {
         try {
-            Set<Emplyee> employees = projectService.getProjectEmployees(projectId);
+            Set<Employee> employees = projectService.getProjectEmployees(projectId);
             return ResponseEntity.ok(employees);
         } catch (RuntimeException ex) {
             return ResponseEntity.notFound().build();

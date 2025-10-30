@@ -57,19 +57,19 @@ The application will be available at `http://localhost:8080`.
 
 ## 🗄️ Database Schema
 
-The application uses three main entities: `Deparment`, `Emplyee`, and `Project`.
+The application uses three main entities: `Department`, `employee`, and `Project`.
 
-*   **Deparment**: The central entity.
-*   **Emplyee**: Belongs to one `Deparment` (**Many-to-One**).
-*   **Project**: Belongs to one `Deparment` (**Many-to-One**).
-*   **Emplyee & Project**: Have a **Many-to-Many** relationship, linked by a join table named `employee_project`.
+*   **Department**: The central entity.
+*   **employee**: Belongs to one `Department` (**Many-to-One**).
+*   **Project**: Belongs to one `Department` (**Many-to-One**).
+*   **employee & Project**: Have a **Many-to-Many** relationship, linked by a join table named `employee_project`.
 
 ---
 
 ## 🌐 API Endpoints
 
 ### Department API
-*   **Base Path:** `/api/deparments`
+*   **Base Path:** `/api/Departments`
 
 | Method   | Path      | Description               |
 | :------- | :-------- | :------------------------ |
@@ -113,16 +113,16 @@ Use a tool like **Postman** to send requests to the endpoints listed above.
 
 ### Example: Create a Full Workflow
 1.  **Create a Department:**
-    *   `POST /api/deparments`
+    *   `POST /api/Departments`
     *   Body: `{ "departmentName": "Engineering" }`
 
 2.  **Create an Employee:**
     *   `POST /api/employees`
-    *   Body: `{ "firstName": "John", "lastName": "Doe", "email": "john.doe@company.com", "password": "123", "deparment": { "deparmentID": 1 } }`
+    *   Body: `{ "firstName": "John", "lastName": "Doe", "email": "john.doe@company.com", "password": "123", "Department": { "DepartmentID": 1 } }`
 
 3.  **Create a Project:**
     *   `POST /api/projects`
-    *   Body: `{ "projectName": "Website Redesign", "deparment": { "deparmentID": 1 } }`
+    *   Body: `{ "projectName": "Website Redesign", "Department": { "DepartmentID": 1 } }`
 
 4.  **Assign Employee to Project:**
     *   `PUT /api/projects/1/employees/1`

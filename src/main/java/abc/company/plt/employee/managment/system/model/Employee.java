@@ -17,12 +17,12 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"deparment", "projects"})
-@Table(name = "emplyee")
-public class Emplyee {
+@ToString(exclude = {"department", "projects"})
+@Table(name = "employee")
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long emplyeeID;
+    private Long employeeID;
 
     @Email(message = "Please provide a valid email address")
     @NotBlank(message = "Email is required")
@@ -36,9 +36,9 @@ public class Emplyee {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deparment_Id")
+    @JoinColumn(name = "department_Id")
     @JsonBackReference("department-employees")
-    private Deparment deparment;
+    private Department Department;
 
     @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -47,9 +47,9 @@ public class Emplyee {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Emplyee)) return false;
-        Emplyee emplyee = (Emplyee) o;
-        return emplyeeID != null && emplyeeID.equals(emplyee.emplyeeID);
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return employeeID != null && employeeID.equals(employee.employeeID);
     }
 
     @Override

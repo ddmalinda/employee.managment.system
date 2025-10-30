@@ -1,7 +1,7 @@
 package abc.company.plt.employee.managment.system.controller;
 
-import abc.company.plt.employee.managment.system.model.Deparment;
-import abc.company.plt.employee.managment.system.model.Emplyee;
+import abc.company.plt.employee.managment.system.model.Department;
+import abc.company.plt.employee.managment.system.model.employee;
 import abc.company.plt.employee.managment.system.model.Project;
 import abc.company.plt.employee.managment.system.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,17 +36,17 @@ class ProjectControllerTest {
     private ObjectMapper objectMapper;
 
     private Project testProject;
-    private Deparment testDepartment;
-    private Emplyee testEmployee;
+    private Department testDepartment;
+    private employee testEmployee;
 
     @BeforeEach
     void setUp() {
-        testDepartment = new Deparment();
-        testDepartment.setDeparmentID(1L);
+        testDepartment = new Department();
+        testDepartment.setDepartmentID(1L);
         testDepartment.setDepartmentName("IT Department");
 
-        testEmployee = new Emplyee();
-        testEmployee.setEmplyeeID(1L);
+        testEmployee = new employee();
+        testEmployee.setemployeeID(1L);
         testEmployee.setEmail("john.doe@example.com");
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
@@ -54,7 +54,7 @@ class ProjectControllerTest {
         testProject = new Project();
         testProject.setProjectID(1L);
         testProject.setProjectName("Project Alpha");
-        testProject.setDeparment(testDepartment);
+        testProject.setDepartment(testDepartment);
         testProject.setEmployees(new HashSet<>());
     }
 
@@ -290,12 +290,12 @@ class ProjectControllerTest {
     @Test
     void getProjectEmployees_ShouldReturnEmployeeSet() throws Exception {
         // Given
-        Emplyee employee2 = new Emplyee();
-        employee2.setEmplyeeID(2L);
+        employee employee2 = new employee();
+        employee2.setemployeeID(2L);
         employee2.setEmail("jane.smith@example.com");
         employee2.setFirstName("Jane");
 
-        Set<Emplyee> employees = new HashSet<>(Arrays.asList(testEmployee, employee2));
+        Set<employee> employees = new HashSet<>(Arrays.asList(testEmployee, employee2));
         when(projectService.getProjectEmployees(1L)).thenReturn(employees);
 
         // When & Then

@@ -1,9 +1,9 @@
 package abc.company.plt.employee.managment.system.service;
 
-import abc.company.plt.employee.managment.system.model.Deparment;
-import abc.company.plt.employee.managment.system.model.Emplyee;
+import abc.company.plt.employee.managment.system.model.Department;
+import abc.company.plt.employee.managment.system.model.employee;
 import abc.company.plt.employee.managment.system.model.Project;
-import abc.company.plt.employee.managment.system.repository.EmplyeeRepository;
+import abc.company.plt.employee.managment.system.repository.employeeRepository;
 import abc.company.plt.employee.managment.system.repository.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,23 +26,23 @@ class ProjectServiceTest {
     private ProjectRepository projectRepository;
 
     @Mock
-    private EmplyeeRepository emplyeeRepository;
+    private employeeRepository employeeRepository;
 
     @InjectMocks
     private ProjectService projectService;
 
     private Project testProject;
-    private Deparment testDepartment;
-    private Emplyee testEmployee;
+    private Department testDepartment;
+    private employee testEmployee;
 
     @BeforeEach
     void setUp() {
-        testDepartment = new Deparment();
-        testDepartment.setDeparmentID(1L);
+        testDepartment = new Department();
+        testDepartment.setDepartmentID(1L);
         testDepartment.setDepartmentName("IT Department");
 
-        testEmployee = new Emplyee();
-        testEmployee.setEmplyeeID(1L);
+        testEmployee = new employee();
+        testEmployee.setemployeeID(1L);
         testEmployee.setEmail("john.doe@example.com");
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
@@ -50,7 +50,7 @@ class ProjectServiceTest {
         testProject = new Project();
         testProject.setProjectID(1L);
         testProject.setProjectName("Project Alpha");
-        testProject.setDeparment(testDepartment);
+        testProject.setDepartment(testDepartment);
         testProject.setEmployees(new HashSet<>());
     }
 
@@ -187,7 +187,7 @@ class ProjectServiceTest {
     void assignEmployeeToProject_WhenBothExist_ShouldAssignEmployee() {
         // Given
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
 
         // When
@@ -198,7 +198,7 @@ class ProjectServiceTest {
         assertThat(result.getEmployees()).contains(testEmployee);
 
         verify(projectRepository, times(1)).findById(1L);
-        verify(emplyeeRepository, times(1)).findById(1L);
+        verify(employeeRepository, times(1)).findById(1L);
         verify(projectRepository, times(1)).save(testProject);
     }
 
@@ -213,7 +213,7 @@ class ProjectServiceTest {
                 .hasMessageContaining("Project not found with id: 999");
 
         verify(projectRepository, times(1)).findById(999L);
-        verify(emplyeeRepository, never()).findById(any());
+        verify(employeeRepository, never()).findById(any());
         verify(projectRepository, never()).save(any(Project.class));
     }
 
@@ -221,7 +221,7 @@ class ProjectServiceTest {
     void assignEmployeeToProject_WhenEmployeeNotExists_ShouldThrowException() {
         // Given
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(999L)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
         assertThatThrownBy(() -> projectService.assignEmployeeToProject(1L, 999L))
@@ -229,7 +229,7 @@ class ProjectServiceTest {
                 .hasMessageContaining("Employee not found with id: 999");
 
         verify(projectRepository, times(1)).findById(1L);
-        verify(emplyeeRepository, times(1)).findById(999L);
+        verify(employeeRepository, times(1)).findById(999L);
         verify(projectRepository, never()).save(any(Project.class));
     }
 
@@ -238,7 +238,7 @@ class ProjectServiceTest {
         // Given
         testProject.getEmployees().add(testEmployee);
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
 
         // When
@@ -254,7 +254,7 @@ class ProjectServiceTest {
         // Given
         testProject.getEmployees().add(testEmployee);
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
 
         // When
@@ -265,7 +265,7 @@ class ProjectServiceTest {
         assertThat(result.getEmployees()).doesNotContain(testEmployee);
 
         verify(projectRepository, times(1)).findById(1L);
-        verify(emplyeeRepository, times(1)).findById(1L);
+        verify(employeeRepository, times(1)).findById(1L);
         verify(projectRepository, times(1)).save(testProject);
     }
 
@@ -280,7 +280,7 @@ class ProjectServiceTest {
                 .hasMessageContaining("Project not found with id: 999");
 
         verify(projectRepository, times(1)).findById(999L);
-        verify(emplyeeRepository, never()).findById(any());
+        verify(employeeRepository, never()).findById(any());
         verify(projectRepository, never()).save(any(Project.class));
     }
 
@@ -288,7 +288,7 @@ class ProjectServiceTest {
     void removeEmployeeFromProject_WhenEmployeeNotExists_ShouldThrowException() {
         // Given
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(999L)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
         assertThatThrownBy(() -> projectService.removeEmployeeFromProject(1L, 999L))
@@ -296,7 +296,7 @@ class ProjectServiceTest {
                 .hasMessageContaining("Employee not found with id: 999");
 
         verify(projectRepository, times(1)).findById(1L);
-        verify(emplyeeRepository, times(1)).findById(999L);
+        verify(employeeRepository, times(1)).findById(999L);
         verify(projectRepository, never()).save(any(Project.class));
     }
 
@@ -304,7 +304,7 @@ class ProjectServiceTest {
     void removeEmployeeFromProject_WhenEmployeeNotInProject_ShouldStillWork() {
         // Given
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
-        when(emplyeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
+        when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
 
         // When
@@ -318,8 +318,8 @@ class ProjectServiceTest {
     @Test
     void getProjectEmployees_WhenProjectExists_ShouldReturnEmployees() {
         // Given
-        Emplyee employee2 = new Emplyee();
-        employee2.setEmplyeeID(2L);
+        employee employee2 = new employee();
+        employee2.setemployeeID(2L);
         employee2.setEmail("jane.smith@example.com");
 
         testProject.getEmployees().add(testEmployee);
@@ -328,7 +328,7 @@ class ProjectServiceTest {
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
 
         // When
-        Set<Emplyee> result = projectService.getProjectEmployees(1L);
+        Set<employee> result = projectService.getProjectEmployees(1L);
 
         // Then
         assertThat(result).hasSize(2);
@@ -343,7 +343,7 @@ class ProjectServiceTest {
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
 
         // When
-        Set<Emplyee> result = projectService.getProjectEmployees(1L);
+        Set<employee> result = projectService.getProjectEmployees(1L);
 
         // Then
         assertThat(result).isEmpty();

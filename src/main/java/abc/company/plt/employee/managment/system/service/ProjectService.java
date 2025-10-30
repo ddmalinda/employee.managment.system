@@ -1,8 +1,8 @@
 package abc.company.plt.employee.managment.system.service;
 
-import abc.company.plt.employee.managment.system.model.Emplyee;
+import abc.company.plt.employee.managment.system.model.Employee;
 import abc.company.plt.employee.managment.system.model.Project;
-import abc.company.plt.employee.managment.system.repository.EmplyeeRepository;
+import abc.company.plt.employee.managment.system.repository.EmployeeRepository;
 import abc.company.plt.employee.managment.system.repository.ProjectRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ProjectService {
     private ProjectRepository  projectRepository;
     
     @Autowired
-    private EmplyeeRepository emplyeeRepository;
+    private EmployeeRepository employeeRepository;
 
     //find by poject id
     public Optional<Project>  getProjectID(Long projectID){
@@ -55,7 +55,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
 
-        Emplyee employee = emplyeeRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employeeId));
 
         project.getEmployees().add(employee);
@@ -69,7 +69,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
 
-        Emplyee employee = emplyeeRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employeeId));
 
         project.getEmployees().remove(employee);
@@ -79,7 +79,7 @@ public class ProjectService {
 
     // Get all employees in a project
     @Transactional
-    public Set<Emplyee> getProjectEmployees(Long projectId) {
+    public Set<Employee> getProjectEmployees(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
         return project.getEmployees();

@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"deparment", "employees"})
+@ToString(exclude = {"Department", "employees"})
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class Project {
     private String projectName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deparment_Id")
+    @JoinColumn(name = "Department_Id")
     @JsonBackReference("department-projects")
-    private Deparment deparment;
+    private Department Department;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -36,7 +36,7 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     @JsonIgnore
-    private Set<Emplyee> employees = new HashSet<>();
+    private Set<employee> employees = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
