@@ -1,9 +1,9 @@
 package abc.company.plt.employee.managment.system.service;
 
 import abc.company.plt.employee.managment.system.model.Department;
-import abc.company.plt.employee.managment.system.model.employee;
+import abc.company.plt.employee.managment.system.model.Employee;
 import abc.company.plt.employee.managment.system.model.Project;
-import abc.company.plt.employee.managment.system.repository.employeeRepository;
+import abc.company.plt.employee.managment.system.repository.EmployeeRepository;
 import abc.company.plt.employee.managment.system.repository.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +26,14 @@ class ProjectServiceTest {
     private ProjectRepository projectRepository;
 
     @Mock
-    private employeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @InjectMocks
     private ProjectService projectService;
 
     private Project testProject;
     private Department testDepartment;
-    private employee testEmployee;
+    private Employee testEmployee;
 
     @BeforeEach
     void setUp() {
@@ -41,8 +41,8 @@ class ProjectServiceTest {
         testDepartment.setDepartmentID(1L);
         testDepartment.setDepartmentName("IT Department");
 
-        testEmployee = new employee();
-        testEmployee.setemployeeID(1L);
+        testEmployee = new Employee();
+        testEmployee.setEmployeeID(1L);
         testEmployee.setEmail("john.doe@example.com");
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
@@ -318,8 +318,8 @@ class ProjectServiceTest {
     @Test
     void getProjectEmployees_WhenProjectExists_ShouldReturnEmployees() {
         // Given
-        employee employee2 = new employee();
-        employee2.setemployeeID(2L);
+        Employee employee2 = new Employee();
+        employee2.setEmployeeID(2L);
         employee2.setEmail("jane.smith@example.com");
 
         testProject.getEmployees().add(testEmployee);
@@ -328,7 +328,7 @@ class ProjectServiceTest {
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
 
         // When
-        Set<employee> result = projectService.getProjectEmployees(1L);
+        Set<Employee> result = projectService.getProjectEmployees(1L);
 
         // Then
         assertThat(result).hasSize(2);
@@ -343,7 +343,7 @@ class ProjectServiceTest {
         when(projectRepository.findById(1L)).thenReturn(Optional.of(testProject));
 
         // When
-        Set<employee> result = projectService.getProjectEmployees(1L);
+        Set<Employee> result = projectService.getProjectEmployees(1L);
 
         // Then
         assertThat(result).isEmpty();

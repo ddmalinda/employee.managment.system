@@ -38,7 +38,7 @@ public class Employee {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_Id")
     @JsonBackReference("department-employees")
-    private Department Department;
+    private Department department;
 
     @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY)
     @JsonIgnore

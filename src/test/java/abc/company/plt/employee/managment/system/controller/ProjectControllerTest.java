@@ -1,7 +1,7 @@
 package abc.company.plt.employee.managment.system.controller;
 
 import abc.company.plt.employee.managment.system.model.Department;
-import abc.company.plt.employee.managment.system.model.employee;
+import abc.company.plt.employee.managment.system.model.Employee;
 import abc.company.plt.employee.managment.system.model.Project;
 import abc.company.plt.employee.managment.system.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +37,7 @@ class ProjectControllerTest {
 
     private Project testProject;
     private Department testDepartment;
-    private employee testEmployee;
+    private Employee testEmployee;
 
     @BeforeEach
     void setUp() {
@@ -45,8 +45,8 @@ class ProjectControllerTest {
         testDepartment.setDepartmentID(1L);
         testDepartment.setDepartmentName("IT Department");
 
-        testEmployee = new employee();
-        testEmployee.setemployeeID(1L);
+        testEmployee = new Employee();
+        testEmployee.setEmployeeID(1L);
         testEmployee.setEmail("john.doe@example.com");
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
@@ -290,12 +290,12 @@ class ProjectControllerTest {
     @Test
     void getProjectEmployees_ShouldReturnEmployeeSet() throws Exception {
         // Given
-        employee employee2 = new employee();
-        employee2.setemployeeID(2L);
+        Employee employee2 = new Employee();
+        employee2.setEmployeeID(2L);
         employee2.setEmail("jane.smith@example.com");
         employee2.setFirstName("Jane");
 
-        Set<employee> employees = new HashSet<>(Arrays.asList(testEmployee, employee2));
+        Set<Employee> employees = new HashSet<>(Arrays.asList(testEmployee, employee2));
         when(projectService.getProjectEmployees(1L)).thenReturn(employees);
 
         // When & Then

@@ -13,45 +13,45 @@ import java.util.stream.Collectors;
 @Service
 public class DepartmentService {
     @Autowired
-    private DepartmentRepository DepartmentRepository;
+    private DepartmentRepository departmentRepository;
 
-    private DepartmentDTO convertToDTO(Department Department) {
+    private DepartmentDTO convertToDTO(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
-        dto.setDepartmentID(Department.getDepartmentID());
-        dto.setDepartmentName(Department.getDepartmentName());
+        dto.setDepartmentID(department.getDepartmentID());
+        dto.setDepartmentName(department.getDepartmentName());
         return dto;
     }
 
     //find department b{y ID
     public Optional<Department> getDepartmentById(Long departmentID){
-        return DepartmentRepository.findById(departmentID);
+        return departmentRepository.findById(departmentID);
     }
 
     //Find ALL Department
     public List<DepartmentDTO> getAllDepartments(){
-        return DepartmentRepository.findAll()
+        return departmentRepository.findAll()
                 .stream()
                 .map(this::convertToDTO)
                 .collect((Collectors.toList()));
     }
 
     //ADD new Department
-    public Department addDepartment(Department Department){
-        return DepartmentRepository.save(Department);
+    public Department addDepartment(Department department){
+        return departmentRepository.save(department);
     }
 
     //update Department
-    public Department updateDepartment(Long DepartmentID,Department DepartmentDetails ){
-        Department Department = DepartmentRepository.findById(DepartmentID)
-                .orElseThrow(()->new RuntimeException("Department not found by id :"+DepartmentID));
+    public Department updateDepartment(Long departmentID, Department departmentDetails){
+        Department department = departmentRepository.findById(departmentID)
+                .orElseThrow(()->new RuntimeException("Department not found by id :"+departmentID));
 
-        Department.setDepartmentName(DepartmentDetails.getDepartmentName());
+        department.setDepartmentName(departmentDetails.getDepartmentName());
 
-        return DepartmentRepository.save(Department);
+        return departmentRepository.save(department);
     }
 
     //delete Department by id
     public void deletDepartment(Long id){
-        DepartmentRepository.deleteById(id);
+        departmentRepository.deleteById(id);
     }
 }
