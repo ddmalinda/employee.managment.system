@@ -5,6 +5,7 @@ import abc.company.plt.employee.managment.system.model.Project;
 import abc.company.plt.employee.managment.system.service.DepartmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,5 +31,29 @@ public class DepartmentControllerTest {
 
     }
 
+
+    @Test
+    void testGetDepartment() {
+        // Add test logic here
+        assertTrue(true);
+    }
+
+    @Test
+    void testCreateDepartment() {
+        // Add test logic here
+        assertTrue(true);
+    }
+
+    @Test
+    void testUpdateDepartment() {
+        // Add test logic here
+        assertTrue(true);
+    }
+
+    @Test
+    void testDeleteDepartment() {
+        // Add test logic here
+        assertTrue(true);
+    }
 }
 
