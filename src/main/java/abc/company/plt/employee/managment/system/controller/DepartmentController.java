@@ -15,47 +15,64 @@ import java.util.List;
 public class DepartmentController {
 
     @Autowired
-    private DepartmentService DepartmentService;
+    private DepartmentService departmentService;
 
     //Get All departments
     @GetMapping
-    public ResponseEntity<List<DepartmentDTO>> getAllDepartmentDetails(){
-        List<DepartmentDTO> Departments=DepartmentService.getAllDepartments();
-        return ResponseEntity.ok(Departments);
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartmentDetails() {
+        try {
+            List<DepartmentDTO> Departments = departmentService.getAllDepartments();
+            return ResponseEntity.ok(Departments);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     //get Department by id
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartmentDetailsById(@PathVariable Long id){
-        return DepartmentService.getDepartmentById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Department> getDepartmentDetailsById(@PathVariable Long id) {
+        try {
+            return departmentService.getDepartmentById(id)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     //add Department
     @PostMapping
-    public ResponseEntity<Department> addDepartment(@RequestBody Department Department){
-        Department addDepartment= DepartmentService.addDepartment(Department);
-        return new ResponseEntity<>(addDepartment, HttpStatus.CREATED);
+    public ResponseEntity<Department> addDepartment(@RequestBody Department departmentDetails) {
+        if (departmentDetails.getDepartmentName() == null ||
+                departmentDetails.getDepartmentName().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build(); // Return 400 Bad Request
+        } else {
+            Department addDepartment = departmentService.addDepartment(departmentDetails);
+            return new ResponseEntity<>(addDepartment, HttpStatus.CREATED);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long id,@RequestBody Department DepartmentDetails){
-        try{
-            Department updatedDepartment = DepartmentService.updateDepartment(id,DepartmentDetails);
+    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department DepartmentDetails) {
+        try {
+            Department updatedDepartment = departmentService.updateDepartment(id, DepartmentDetails);
             return ResponseEntity.ok(updatedDepartment);
-        }catch(RuntimeException ex){
+        } catch (RuntimeException ex) {
             return ResponseEntity.notFound().build(); // Return 404
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id){
-        if(DepartmentService.getDepartmentById(id).isPresent()){
-            DepartmentService.deletDepartment(id);
-            return ResponseEntity.noContent().build(); //retun 204
-        }else{
-            return ResponseEntity.notFound().build(); // return 404
+    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
+        try {
+            if (departmentService.getDepartmentById(id).isPresent()) {
+                departmentService.deleteDepartment(id);
+                return ResponseEntity.noContent().build(); //retun 204
+            } else {
+                return ResponseEntity.notFound().build(); // return 404
+            }
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
