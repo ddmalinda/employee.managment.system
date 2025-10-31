@@ -83,25 +83,137 @@ You can access the interactive **Swagger UI** documentation to see all endpoints
 
 **http://localhost:8080/swagger-ui.html**
 
-### Example API Endpoints:
+---
 
-#### **Employees**
+## API Endpoints
 
-- `GET /api/employees`: Get all employees.
-- `GET /api/employees/{id}`: Get a single employee by ID.
-- `POST /api/employees`: Create a new employee.
-- `PUT /api/employees/{id}`: Update an existing employee.
-- `DELETE /api/employees/{id}`: Delete an employee.
+### 🧑‍💼 Employee Endpoints
 
-#### **Departments**
+**Base URL:** `/api/employees`
 
-- `GET /api/departments`: Get all departments.
-- `POST /api/departments`: Create a new department.
+| Method | Endpoint | Description | Request Body | Response |
+|--------|----------|-------------|--------------|----------|
+| `GET` | `/api/employees` | Get all employees | - | `200 OK` - List of employees |
+| `GET` | `/api/employees/{id}` | Get employee by ID | - | `200 OK` - Employee object<br>`404 Not Found` - Employee not found |
+| `GET` | `/api/employees/department/{departmentId}` | Get all employees in a department | - | `200 OK` - List of employees |
+| `POST` | `/api/employees` | Create a new employee | Employee JSON | `201 Created` - Created employee |
+| `PUT` | `/api/employees/{id}` | Update an existing employee | Employee JSON | `200 OK` - Updated employee<br>`404 Not Found` - Employee not found |
+| `DELETE` | `/api/employees/{id}` | Delete an employee | - | `204 No Content` - Successfully deleted<br>`404 Not Found` - Employee not found |
 
-#### **Projects**
+**Example - Create Employee:**
+```json
+POST /api/employees
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@company.com",
+  "password": "securePassword123",
+  "department": {
+    "departmentID": 1
+  }
+}
+```
 
-- `GET /api/projects`: Get all projects.
-- `POST /api/projects`: Create a new project.
+---
+
+### 🏢 Department Endpoints
+
+**Base URL:** `/api/departments`
+
+| Method | Endpoint | Description | Request Body | Response |
+|--------|----------|-------------|--------------|----------|
+| `GET` | `/api/departments` | Get all departments | - | `200 OK` - List of departments (DTO) |
+| `GET` | `/api/departments/{id}` | Get department by ID | - | `200 OK` - Department object<br>`404 Not Found` - Department not found |
+| `POST` | `/api/departments` | Create a new department | Department JSON | `201 Created` - Created department |
+| `PUT` | `/api/departments/{id}` | Update an existing department | Department JSON | `200 OK` - Updated department<br>`404 Not Found` - Department not found |
+| `DELETE` | `/api/departments/{id}` | Delete a department | - | `204 No Content` - Successfully deleted<br>`404 Not Found` - Department not found |
+
+**Example - Create Department:**
+```json
+POST /api/departments
+{
+  "departmentName": "Engineering"
+}
+```
+
+---
+
+### 📁 Project Endpoints
+
+**Base URL:** `/api/projects`
+
+| Method | Endpoint | Description | Request Body | Response |
+|--------|----------|-------------|--------------|----------|
+| `GET` | `/api/projects` | Get all projects | - | `200 OK` - List of projects |
+| `GET` | `/api/projects/{id}` | Get project by ID | - | `200 OK` - Project object<br>`404 Not Found` - Project not found |
+| `POST` | `/api/projects` | Create a new project | Project JSON | `201 Created` - Created project |
+| `PUT` | `/api/projects/{id}` | Update an existing project | Project JSON | `200 OK` - Updated project<br>`404 Not Found` - Project not found |
+| `DELETE` | `/api/projects/{id}` | Delete a project | - | `204 No Content` - Successfully deleted<br>`404 Not Found` - Project not found |
+| `PUT` | `/api/projects/{projectId}/employees/{employeeId}` | Assign an employee to a project | - | `200 OK` - Updated project<br>`404 Not Found` - Project or Employee not found |
+| `DELETE` | `/api/projects/{projectId}/employees/{employeeId}` | Remove an employee from a project | - | `200 OK` - Updated project<br>`404 Not Found` - Project or Employee not found |
+| `GET` | `/api/projects/{projectId}/employees` | Get all employees assigned to a project | - | `200 OK` - Set of employees<br>`404 Not Found` - Project not found |
+
+**Example - Create Project:**
+```json
+POST /api/projects
+{
+  "projectName": "Mobile App Development",
+  "department": {
+    "departmentID": 1
+  }
+}
+```
+
+**Example - Assign Employee to Project:**
+```bash
+PUT /api/projects/1/employees/1
+```
+
+---
+
+### 📊 Complete Workflow Example
+
+1. **Create a Department:**
+   ```bash
+   POST /api/departments
+   Body: { "departmentName": "IT Department" }
+   ```
+
+2. **Create an Employee:**
+   ```bash
+   POST /api/employees
+   Body: {
+     "firstName": "Jane",
+     "lastName": "Smith",
+     "email": "jane.smith@company.com",
+     "password": "password123",
+     "department": { "departmentID": 1 }
+   }
+   ```
+
+3. **Create a Project:**
+   ```bash
+   POST /api/projects
+   Body: {
+     "projectName": "Website Redesign",
+     "department": { "departmentID": 1 }
+   }
+   ```
+
+4. **Assign Employee to Project:**
+   ```bash
+   PUT /api/projects/1/employees/1
+   ```
+
+5. **Get All Employees in Project:**
+   ```bash
+   GET /api/projects/1/employees
+   ```
+
+6. **Get All Employees in Department:**
+   ```bash
+   GET /api/employees/department/1
+   ```
 
 ---
 
