@@ -37,7 +37,7 @@ public class EmployeeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Update Employee [cite: 16, 32]
+    // Update Employee
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
         try {
@@ -48,10 +48,10 @@ public class EmployeeController {
         }
     }
 
-    // Delete Employee [cite: 17, 33]
+    // Delete Employee
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-        // Basic check if employee exists before deleting
+        //if employee exists before deleting
         if (employeeService.getEmployeeById(id).isPresent()) {
             employeeService.deleteEmployeeById(id);
             return ResponseEntity.noContent().build(); // Return 204 No Content on success
