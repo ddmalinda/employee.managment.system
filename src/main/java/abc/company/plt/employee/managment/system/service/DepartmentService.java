@@ -24,6 +24,9 @@ public class DepartmentService {
 
     //find department b{y ID
     public Optional<Department> getDepartmentById(Long departmentID){
+        if(departmentID==null || departmentID<=0){
+            throw new IllegalArgumentException("Invalid Department ID");
+        }
         return departmentRepository.findById(departmentID);
     }
 
@@ -37,11 +40,17 @@ public class DepartmentService {
 
     //ADD new Department
     public Department addDepartment(Department department){
+        if(department == null || department.getDepartmentName() == null || department.getDepartmentName().isEmpty()){
+            throw new IllegalArgumentException("Department name cannot be null or empty");
+        }
         return departmentRepository.save(department);
     }
 
     //update Department
     public Department updateDepartment(Long departmentID, Department departmentDetails){
+        if(departmentID==null || departmentID<=0){
+            throw new IllegalArgumentException("Invalid Department ID");
+        }
         Department department = departmentRepository.findById(departmentID)
                 .orElseThrow(()->new RuntimeException("Department not found by id :"+departmentID));
 
@@ -52,6 +61,9 @@ public class DepartmentService {
 
     //delete Department by id
     public void deleteDepartment(Long id){
+        if(id==null || id<=0){
+            throw new IllegalArgumentException("Invalid Department ID");
+        }
         departmentRepository.deleteById(id);
     }
 }

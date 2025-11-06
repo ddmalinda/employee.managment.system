@@ -22,6 +22,9 @@ public class ProjectService {
 
     //find by poject id
     public Optional<Project>  getProjectID(Long projectID){
+        if(projectID==null || projectID<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
         return projectRepository.findById(projectID);
     }
 
@@ -32,11 +35,17 @@ public class ProjectService {
 
     //add project
     public Project addProject(Project project){
+        if (project == null || project.getProjectName() == null || project.getProjectName().isEmpty()) {
+            throw new IllegalArgumentException("Project name cannot be null or empty");
+        }
         return projectRepository.save(project);
     }
 
     //Update project
     public Project updateProject(Long projectId,Project projectDetails){
+        if(projectId==null || projectId<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
             Project project =projectRepository.findById(projectId)
                     .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
             //update project
@@ -45,13 +54,23 @@ public class ProjectService {
     }
 
     //delete project
-    public void deleteProject(Long projectid){
-        projectRepository.deleteById(projectid);
+    public void deleteProject(Long projectID){
+        if(projectID==null || projectID<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
+        projectRepository.deleteById(projectID);
     }
 
     // Assign an employee to a project
     @Transactional
     public Project assignEmployeeToProject(Long projectId, Long employeeId) {
+        if(projectId==null || projectId<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
+
+        if(employeeId==null || employeeId<=0){
+            throw new IllegalArgumentException("Invalid Employee ID");
+        }
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
 
@@ -66,6 +85,14 @@ public class ProjectService {
     // Remove an employee from a project
     @Transactional
     public Project removeEmployeeFromProject(Long projectId, Long employeeId) {
+        if(projectId==null || projectId<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
+
+        if(employeeId==null || employeeId<=0){
+            throw new IllegalArgumentException("Invalid Employee ID");
+        }
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
 
@@ -80,6 +107,9 @@ public class ProjectService {
     // Get all employees in a project
     @Transactional
     public Set<Employee> getProjectEmployees(Long projectId) {
+        if(projectId==null || projectId<=0){
+            throw new IllegalArgumentException("Invalid Project ID");
+        }
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
         return project.getEmployees();
